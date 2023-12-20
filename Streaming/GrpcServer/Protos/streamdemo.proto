@@ -1,0 +1,31 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GrpcServer";
+
+package streamdemo;
+
+service StreamDemo{
+	rpc ServerStreamingDemo(Test) returns (stream Test);
+	rpc ClientStreamingDemo(stream Test) returns (Test);
+	rpc BidirectionalStreamingDemo(stream Test) returns (stream Test);
+	rpc Speak (stream Msg) returns (stream Msg);
+	rpc GetWeatherStream (google.protobuf.Empty) returns (stream WeatherData);
+}
+
+message Test{
+	string TestMessage = 1;
+}
+
+message Msg {
+    string text = 1;
+}
+
+message WeatherData {
+  google.protobuf.Timestamp dateTimeStamp = 1;
+  int32 temperatureC = 2;
+  int32 temperatureF = 3;
+  string summary = 4;
+}
